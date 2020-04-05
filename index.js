@@ -1,8 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
-const { connect, close } = require('./db');
-const auth = require('./handlers/auth');
+const config = require('./config');
+const auth = require('./controllers/auth');
+const userRoutes = require('./routes/users')
+const bookingRoutes = require('./routes/bookings');
+
 
 let app = express();
 
@@ -10,13 +14,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(auth);
+app.use(userRoutes);
+app.use(bookingRoutes);
+
+let server;
 
 process.on('SIGINT', function() {
-  close();
   server.close();
 });
 
-let server = app.listen(3000, () => {
-  console.log("Listening at port 3000");
-  connect();
-});
+mongoose.connect(config.dbUrl, { dbName: config.dbName, useNewUrlParser: true, useUnifiedTopology: true})
+  .then(() => {
+    server = app.listen(3000, () => console.log("Listening at port 3000"))
+  })
+  .catch((err) => {
+    console.error("Error in creating connection::", err);
+  });
