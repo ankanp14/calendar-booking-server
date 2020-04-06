@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const config = require('../config');
 
 let bypassList = ['registration', 'login'];
@@ -12,13 +14,22 @@ let auth = (req, res, next) => {
   if (bypass) {
     return next();
   }
-  if (!req.headers || !req.headers["x-api-key"]) {
-    return res.status(403).json({ error: 'Unauthorized access' });
-  } else if (req.headers["x-api-key"] !== config["x-api-key"]) {
-    console.log(req.headers);
+
+  if (!req.get('Authorization')) {
     return res.status(403).json({ error: 'Unauthorized access' });
   }
-  next();
+
+  const token = req.get('Authorization').split(' ')[1];
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(token, config.tokenSecret);
+    if (decodedToken.userId && decodedToken.email) {
+      console.log(decodedToken);
+      next();
+    }
+  } catch(err) {
+    return res.status(403).json({ error: 'Unauthorized access' });
+  }
 };
 
 module.exports = auth;

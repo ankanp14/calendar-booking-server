@@ -1,4 +1,7 @@
+const jwt = require('jsonwebtoken');
+
 const User = require('../models/user');
+const config = require('../config');
 
 let createUser = (name, email, password) => {
     return User.findOne({ email: email })
@@ -49,20 +52,26 @@ let login = (email, password) => {
                             });
                         }
                         if (isMatch) {
+                            let token = jwt.sign(
+                                { email: user.email, userId: user._id.toString() }, 
+                                config.tokenSecret,
+                                { expiresIn: '14d' }
+                            );  // added 14 day expiry for testing and validation
                             return resolve({
                                 status: true,
                                 message: "verified",
                                 match: true,
-                                userId: user.id,
+                                userId: user._id,
                                 name: user.name,
-                                email: user.email
+                                email: user.email,
+                                token: token
                             })
                         }
                         resolve({
                             status: false,
                             message: "password mismatch",
                             match: false,
-                            userId: user.id
+                            userId: user._id
                         });
                     });
                 });
