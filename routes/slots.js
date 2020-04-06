@@ -23,8 +23,8 @@ let validateSlots = (slots) => {
 
 router.post('/add-slots', (req, res, next) => {
    let params = req.body;
-    if (!params.userId || !params.date || !params.slots) {
-        return res.status(400).json({ error: 'missing any of the following: userId, date, slots' });
+    if (!params.email || !params.date || !params.slots) {
+        return res.status(400).json({ error: 'missing any of the following: email, date, slots' });
     }
     if (!params.slots instanceof Array) {
         return res.status(400).json({ error: 'slots should be an array' });
@@ -32,7 +32,7 @@ router.post('/add-slots', (req, res, next) => {
     if (!validateSlots(params.slots)) {
         return res.status(400).json({ error: 'one or more invalid slots' });
     }
-    addSlots(params.userId, params.date, params.slots)
+    addSlots(params.email, params.date, params.slots)
         .then((data) => {
             res.status(200).json(data);
         })
@@ -57,10 +57,10 @@ router.delete('/delete-slot', (req, res, next) => {
 
 router.post('/get-slots', (req, res, next) => {
     let params = req.body;
-     if (!params.userId || !params.date) {
-         return res.status(400).json({ error: 'missing any of the following: userId, date' });
+     if (!params.email || !params.date) {
+         return res.status(400).json({ error: 'missing any of the following: email, date' });
      }
-     getSlots(params.userId, params.date)
+     getSlots(params.email, params.date)
          .then((data) => {
              res.status(200).json(data);
          })

@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 
 let Schema = mongoose.Schema;
 
-let SlotSchema = new Schema({
-    email: {
-        type: String,
-        required: true
-    },
+let BookingSchema = new Schema({
     date: {
         type: Schema.Types.Date,
+        required: true
+    },
+    slotId: {
+        type: Schema.Types.ObjectId,
         required: true
     },
     startTime: {
@@ -19,8 +19,13 @@ let SlotSchema = new Schema({
         type: String,
         required: true
     },
-    isBooked: {
-        type: Boolean
+    bookedBy: {
+        type: String,
+        required: true
+    },
+    bookedFor: {
+        type: String,
+        required: true
     },
     createdAt: {
         type: Schema.Types.Date,
@@ -28,4 +33,4 @@ let SlotSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('slots', SlotSchema);
+module.exports = mongoose.model('bookings', BookingSchema);

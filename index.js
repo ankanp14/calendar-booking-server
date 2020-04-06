@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const config = require('./config');
-const auth = require('./controllers/auth');
+const auth = require('./middleware/auth');
 const userRoutes = require('./routes/users');
 const slotRoutes = require('./routes/slots');
 const bookingRoutes = require('./routes/bookings');
@@ -24,6 +24,8 @@ let server;
 process.on('SIGINT', function() {
   server.close();
 });
+
+mongoose.set('useFindAndModify', false);
 
 mongoose.connect(config.dbUrl, { dbName: config.dbName, useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {

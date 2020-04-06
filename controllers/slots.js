@@ -1,7 +1,7 @@
 const Slot = require('../models/slots');
 
-let addSlots = (userId, date, slots) => {
-    return Slot.find({ userId, date })
+let addSlots = (email, date, slots) => {
+    return Slot.find({ email, date })
         .then((result) => {
             let slotsToAdd = [];
             for(let i = 0; i < slots.length; i++) {
@@ -15,10 +15,11 @@ let addSlots = (userId, date, slots) => {
                 }
                 if (!slotExists) {
                     slotsToAdd.push({
-                        userId: userId,
+                        email: email,
                         date: date,
                         startTime: slots[i].startTime,
                         endTime: slots[i].endTime,
+                        isBooked: false,
                         createdAt: new Date().toISOString()
                     });
                 }
@@ -64,8 +65,8 @@ let deleteSlot = (id) => {
         })
 };
 
-let getSlots = (userId, date) => {
-    return Slot.find({ userId, date })
+let getSlots = (email, date) => {
+    return Slot.find({ email, date })
         .then((result) => {
             return {
                 status: true,
