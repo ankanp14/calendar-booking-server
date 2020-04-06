@@ -25,6 +25,7 @@ process.on('SIGINT', function() {
 
 mongoose.connect(config.dbUrl, { dbName: config.dbName, useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
+    console.log("DB connection established");
     server = app.listen(3000, () => console.log("Listening at port 3000"))
   })
   .catch((err) => {
