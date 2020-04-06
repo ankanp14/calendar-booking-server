@@ -75,8 +75,8 @@ let login = (email, password) => {
 };
 
 
-let getUser = (userId) => {
-    return User.findOne({ id: userId })
+let getUser = (email) => {
+    return User.findOne({ email })
         .then((result) => {
             if (!result) {
                 return {
@@ -87,7 +87,11 @@ let getUser = (userId) => {
             return {
                 status: true,
                 message: "user found",
-                data: result
+                data: {
+                    id: result._id,
+                    name: result.name,
+                    email: result.email
+                }
             };
         })
         .catch(err => {

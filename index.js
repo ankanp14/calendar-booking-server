@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 
 const config = require('./config');
 const auth = require('./controllers/auth');
-const userRoutes = require('./routes/users')
+const userRoutes = require('./routes/users');
+const slotRoutes = require('./routes/slots');
 const bookingRoutes = require('./routes/bookings');
 
 
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(auth);
 app.use(userRoutes);
 app.use(bookingRoutes);
+app.use(slotRoutes);
 
 let server;
 

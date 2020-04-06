@@ -9,10 +9,10 @@ router.all('/', (req, res) => {
 
 router.post('/get-user', (req, res, next) => {
    let params = req.body;
-    if (!params.userId) {
-        return res.status(400).json({ error: 'missing userId' });
+    if (!params.email) {
+        return res.status(400).json({ error: 'missing user email' });
     }
-    getUser(params.userId)
+    getUser(params.email)
         .then((data) => {
             res.status(200).json(data);
         })
