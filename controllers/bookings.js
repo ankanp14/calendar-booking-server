@@ -94,8 +94,20 @@ let deleteBooking = (id) => {
         })
 };
 
-let getBookings = (email, date) => {
-    return Booking.find({ bookedBy: email, date: new Date(date) })
+let getBookings = (email, date, hasBooked) => {
+    let query;
+    if (hasBooked === true) {
+        query = { 
+            bookedBy: email, 
+            date: new Date(date) 
+        };
+    } else {
+        query = { 
+            bookedFor: email, 
+            date: new Date(date) 
+        };
+    }
+    return Booking.find(query)
         .then((result) => {
             if (!result instanceof Array) {
                 result = [result];
