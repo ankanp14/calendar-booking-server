@@ -38,6 +38,7 @@ let addBooking = (booking) => {
             let bookingObj = new Booking({
                 date: booking.date,
                 slotId: result._id,
+                description: booking.description || null,
                 startTime: booking.startTime,
                 endTime: booking.endTime,
                 bookedBy: booking.bookedBy,

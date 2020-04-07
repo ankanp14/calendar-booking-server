@@ -11,6 +11,9 @@ let BookingSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
+    description: {
+        type: String
+    },
     startTime: {
         type: String,
         required: true
