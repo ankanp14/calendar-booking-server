@@ -8,6 +8,7 @@ npm start
 ```
 
 ###### To run test cases
+Run MongoDB locally and if needed make appropriate changes to config.js
 ```
 npm run test-server
 ```
