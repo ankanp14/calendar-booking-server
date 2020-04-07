@@ -1,8 +1,8 @@
 module.exports = {
-    "dbName": "calendar_slots",
-    "dbUrl": "mongodb://localhost:27017/",
+    "dbName": process.env.DB_NAME,
+    "dbUrl": process.env.DB_URL,
     "testDbName": "test_calendar_slots",
     "testDbUrl": "mongodb://localhost:27017/",
-    "tokenSecret": "8cd82a1d-c45b-4407-9eda-41155256ab8c",
+    "tokenSecret": process.env.TOKEN_SECRET,
     "url": "http://localhost:3000"
   };
