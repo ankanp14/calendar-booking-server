@@ -40,7 +40,7 @@ router.post('/get-bookings', (req, res, next) => {
      if (!params.email || !params.date) {
          return res.status(400).json({ error: 'missing any of the following: email, date' });
      }
-     getBookings(params.email, params.date)
+     getBookings(params.email, params.date, params.hasBooked)
          .then((data) => {
              res.status(200).json(data);
          })
