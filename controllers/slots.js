@@ -49,14 +49,14 @@ let deleteSlot = (id) => {
         .then((result) => {
             if (!result) {
                 return {
-                    status: true,
+                    status: false,
                     message: "Slot does not exist"
                 };
             }
             return {
                 status: true,
                 message: "Slot deleted successfully",
-                details: result
+                data: result
             };
         })
         .catch((err) => {

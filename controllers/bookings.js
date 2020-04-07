@@ -69,7 +69,7 @@ let deleteBooking = (id) => {
         .then((result) => {
             if (!result) {
                 errResp = {
-                    status: true,
+                    status: false,
                     message: "Booking does not exist"
                 };
                 return true;
@@ -97,6 +97,9 @@ let deleteBooking = (id) => {
 let getBookings = (email, date) => {
     return Booking.find({ bookedBy: email, date: new Date(date) })
         .then((result) => {
+            if (!result instanceof Array) {
+                result = [result];
+            }
             return {
                 status: true,
                 message: `${result.length} bookings found`,

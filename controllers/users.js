@@ -4,18 +4,20 @@ const User = require('../models/user');
 const config = require('../config');
 
 let createUser = (name, email, password) => {
+    let isExists = false;
     return User.findOne({ email: email })
         .then((result) => {
             if (result) {
                 console.log("Error: user already exists", result);
+                isExists = true;
                 return true;
             } else {
                 let user = new User({ name, email, password });
-                console.log("Name", name)
+                console.log("Email", email)
                 return user.save();
             }
         })
-        .then((isExists) => {
+        .then(() => {
             if (isExists) {
                 return {
                     status: false,
